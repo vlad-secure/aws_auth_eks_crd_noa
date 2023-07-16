@@ -81,6 +81,12 @@ async def delete_mapping(spec: dict, **_) -> None:
 
     :param spec: The spec of the removed IamIdentityMapping
     """
+
+    name = spec.get("name")
+    if name and name.endswith("infra-fargate"):
+        # Ignore deletion for fargate iam role
+        return
+        
     configmap = API.read_namespaced_config_map("aws-auth", "kube-system")
 
     arn_field = spec["userarn"] if spec.get("userarn") else spec["rolearn"]
