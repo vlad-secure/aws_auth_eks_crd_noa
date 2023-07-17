@@ -134,6 +134,8 @@ def check_synchronization() -> bool:
     identities_in_cm_set = set(identities_in_cm) - set(identities_to_ignore)
 
     if identities_in_cm_set != set(identities_in_crd):
+        logger.info(identities_in_cm_set)
+        logger.info(set(identities_in_crd))
         # Raise exception to make the monitoring probe fail
         raise Exception("monitoring check result : out-of-sync")
 
