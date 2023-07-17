@@ -82,8 +82,8 @@ async def delete_mapping(spec: dict, **_) -> None:
     :param spec: The spec of the removed IamIdentityMapping
     """
 
-    name = spec.get("name")
-    if name and name.endswith("infra-fargate"):
+    username = spec.get("username")
+    if username and username in IGNORED_CM_IDENTITIES:
         # Ignore deletion for fargate iam role
         return
         
