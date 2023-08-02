@@ -124,16 +124,17 @@ def check_synchronization() -> bool:
     identities_in_cm = identities_in_cm if isinstance(identities_in_cm, list) else list()
     identities_in_cm = [u["username"] for u in identities_in_cm]
 
-    # Allow some mappings in the aws-auth ConfigMap to exist without being defined
-    # in an IamIdentityMapping object.
-    identities_to_ignore: List[str] = deepcopy(IGNORED_CM_IDENTITIES)
+    # # Allow some mappings in the aws-auth ConfigMap to exist without being defined
+    # # in an IamIdentityMapping object.
+    # identities_to_ignore: List[str] = deepcopy(IGNORED_CM_IDENTITIES)
+    #
+    # if "IGNORED_CM_IDENTITIES" in environ:
+    #     identities_to_ignore = identities_to_ignore + environ.get("IGNORED_CM_IDENTITIES", "").split(",")
+    #
+    # identities_in_cm_set = set(identities_in_cm) - set(identities_to_ignore)
 
-    if "IGNORED_CM_IDENTITIES" in environ:
-        identities_to_ignore = identities_to_ignore + environ.get("IGNORED_CM_IDENTITIES", "").split(",")
-
-    identities_in_cm_set = set(identities_in_cm) - set(identities_to_ignore)
-
-    if identities_in_cm_set != set(identities_in_crd):
+    if set(identities_in_cm) != set(identities_in_crd):
+        logger.info(set(identities_to_ignore))
         logger.info(identities_in_cm_set)
         logger.info(set(identities_in_crd))
         # Raise exception to make the monitoring probe fail
