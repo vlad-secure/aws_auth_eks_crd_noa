@@ -4,6 +4,8 @@ import logging
 from copy import deepcopy
 from os import environ
 from pathlib import Path
+
+
 from typing import List
 
 import kopf
@@ -12,6 +14,7 @@ from kubernetes import client, config
 from kubernetes.client.models.v1_config_map import V1ConfigMap
 
 logger = logging.getLogger("operator")
+
 
 try:
     config.load_kube_config()
@@ -47,6 +50,7 @@ async def update_mapping(old, new, diff, **_) -> None:
         return
 
     await delete_mapping(old["spec"])
+    
     await create_mapping(new["spec"], diff)
 
 
