@@ -201,6 +201,9 @@ def get_cm_identity_mappings(configmap: V1ConfigMap) -> list:
         raise yaml_error
 
 
+
+
+
 async def apply_cm_identity_mappings(existing_cm: V1ConfigMap, identity_mappings: list) -> None:
     """Apply new identity mappings to override the existing aws-auth mapping.
 
