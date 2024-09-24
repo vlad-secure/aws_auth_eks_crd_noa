@@ -16,6 +16,7 @@ logger = logging.getLogger("operator")
 try:
     config.load_kube_config()
 except Exception as error:
+    
     logger.info("Could not load kubeconfig. Error is : %s.\nAssuming we are in a kubernetes cluster", error)
     try:
         config.load_incluster_config()
